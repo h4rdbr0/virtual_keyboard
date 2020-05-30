@@ -1,0 +1,78 @@
+.virtual_keyboard_input_container {
+    width: 98%;
+    height: 40px;
+    font-size: 1.4em;
+}
+
+.virtual_keyboard_title_container {
+    font-size: 1.5em;
+    margin: 10px;
+}
+
+.virtual_keyboard_container {
+    font-family: system-ui;
+    font-size: 1.25em;
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, 0%);
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+
+.virtual_keyboard_buttons_container {
+    color: white;
+    background-color: black;
+    margin: 5px;
+}
+
+.virtual_keyboard_button {
+    display: inline-block;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: 3px;
+    padding: 3px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.virtual_keyboard_button_color_default {
+    background: rgb(0,0,0);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(138,138,138,1) 100%);
+}
+
+.virtual_keyboard_button_color_control {
+    background: rgb(0,0,0);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(138,138,138,1) 100%);
+    color: rgb(255, 213, 124);
+}
+
+.virtual_keyboard_button_color_control_caps_on {
+    background: rgb(0,0,0);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(138,138,138,1) 100%);
+    color: rgb(255, 213, 124);
+    border: 1px solid rgba(255,175,0,1)
+}
+
+.virtual_keyboard_button_length_1 {
+    width: 66px;
+}
+
+.virtual_keyboard_button_length_2 {
+    width: 146px;
+}
+
+.virtual_keyboard_button_length_5 {
+    width: 386px;
+}
+
+.virtual_keyboard_button_focus {
+    background: rgb(0,0,0);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,175,0,1) 100%);
+    border: 1px solid rgba(255,175,0,1);
+}
+

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../src/virtual_keyboard.css">
+        <script src="../src/virtual_keyboard.js"></script>
+        <script src="../src/virtual_keyboard_layout_eng.js"></script>
+        <script src="../src/virtual_keyboard_layout_rus.js"></script>
+    </head>
+    <body>
+
+        <button onclick="openKeyboard();">Open the keyboard</button>
+
+        <p id="cancel"><b>Cancel data</b></p>
+            
+        <p id="enter"><b>Enter data</b></p>
+
+        <script>
+            function openKeyboard() {
+
+                // Creating a new keyboard object
+                var newKeyboard = Object.create(VirtualKeyboard);
+
+                // Initialize a keyboard
+                newKeyboard.init({
+                    templates: [VirtualKeyboardLayoutEnglish, VirtualKeyboardLayoutRussian],
+                    navigationKeys: {
+                        ENTER: 13,
+                        LEFT: 37,
+                        UP: 38,
+                        RIGHT: 39,
+                        DOWN: 40,
+                        EXIT: 8
+                    },
+                    onEnter: function(value) {
+                        console.log('Keyboard ENTER with value: ' + value);
+                        // Pushing onEnter result into HTML
+                        var div = document.createElement('div');
+                        div.innerText = value;
+                        document.getElementById('enter').appendChild(div);
+                    },
+                    onCancel: function(value) {
+                        console.log('Keyboard CANCEL with value: ' + value);
+                        // Pushing onCancel result into HTML
+                        var div = document.createElement('div');
+                        div.innerText = value;
+                        document.getElementById('cancel').appendChild(div);
+                    }
+                });
+
+                // Showing a keyboard
+                newKeyboard.show();
+
+            }
+        </script>
+
+    </body>
+</html>
