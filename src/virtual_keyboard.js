@@ -10,7 +10,7 @@ var VirtualKeyboard = {
     init: function(options) {
 
         if (document.querySelector('.virtual_keyboard_container') !== null) {
-            throw 'Other keyboard already exist! Please deinitialize it first!';
+            throw 'Another keyboard already exists! Please deinitialize it first!';
         }
 
         // Checking the existence of templates in input data
