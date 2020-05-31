@@ -52,41 +52,41 @@ You can also try to run the example from a file `sample/index.html`.
 ### Configuration
 Full configuration is showing below (`init()` method parameters):
 
-	newKeyboard.init({
+    newKeyboard.init({
 
-		// List of templates, you can use as much as you can (there must be at least one) - mandatory!
-		templates: [VirtualKeyboardLayoutEnglish, VirtualKeyboardLayoutRussian],
-		
-		// Custom title - optional.
-		title: 'My title',
-		
-		// Initial input text - optional.
-		inputText: 'Some input text',
-		
-		// Container to which the keyboard will be append - optional.
-		viewContainer: document.body,
-		
-		// Keycodes of buttons for navigation - optional.
-		navigationKeys: {
-			ENTER: 13,
-			LEFT: 37,
-			UP: 38,
-			RIGHT: 39,
-			DOWN: 40,
-			EXIT: 8
-		},
-		
-		// OnEnter-callback - optional.
-		onEnter: function(value) {
-			console.log('Keyboard ENTER with value: ' + value);
-		},
-		
-		// OnCancel-callback - optional.
-		onCancel: function(value) {
-			console.log('Keyboard CANCEL with value: ' + value);
-		}
+        // List of templates, you can use as much as you can (there must be at least one) - mandatory!
+        templates: [VirtualKeyboardLayoutEnglish, VirtualKeyboardLayoutRussian],
 
-	});
+        // Custom title - optional.
+        title: 'My title',
+
+        // Initial input text - optional.
+        inputText: 'Some input text',
+
+        // Container to which the keyboard will be append - optional.
+        viewContainer: document.body,
+
+        // Keycodes of buttons for navigation - optional.
+        navigationKeys: {
+            ENTER: 13,
+            LEFT: 37,
+            UP: 38,
+            RIGHT: 39,
+            DOWN: 40,
+            EXIT: 8
+        },
+
+        // OnEnter-callback - optional.
+        onEnter: function(value) {
+            console.log('Keyboard ENTER with value: ' + value);
+        },
+
+        // OnCancel-callback - optional.
+        onCancel: function(value) {
+            console.log('Keyboard CANCEL with value: ' + value);
+        }
+
+    });
 
 Only the `templates` parameter is mandatory.
 
