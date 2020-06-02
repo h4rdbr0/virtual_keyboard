@@ -27,11 +27,13 @@ var VirtualKeyboard = {
         this.viewContainer = options.viewContainer || document.body; // Where to push keyboard
         this.navigationKeys = options.navigationKeys; // Navigation buttons
 
-        // Containers
-        this.keyboardContainer = null; // Keyboard container data
-        this.inputContainer = null; // Input container
-        this.titleContainer = null; // Title container
-        this.buttonsContainer = null; // Buttons container
+        // Containers to be created
+        this.containers = {
+            title: null, // Title container
+            input: null, // Input container
+            buttons: null, // Buttons container
+            keyboard: null // Main keyboard container
+        };
 
         // Active button data
         this.activeButton = {
@@ -131,7 +133,7 @@ var VirtualKeyboard = {
     show: function() {
 
         // Creating keyboard container, if it's not exist
-        if (this.keyboardContainer === null) {
+        if (this.containers.keyboard === null) {
             this.create();
         }
 
@@ -139,7 +141,7 @@ var VirtualKeyboard = {
         this.render(this.layout.active);
 
         // Focus on input field
-        this.inputContainer.focus();
+        this.containers.input.focus();
 
     },
 
@@ -149,28 +151,28 @@ var VirtualKeyboard = {
     create: function() {
 
         // Creating main keyboard container
-        this.keyboardContainer = this.createElementForKeyboard('container', null);
-        this.viewContainer.appendChild(this.keyboardContainer);
-        this.keyboardContainer.addEventListener('keydown', this.buttonPressHandler.bind(this));
+        this.containers.keyboard = this.createElementForKeyboard('container', null);
+        this.viewContainer.appendChild(this.containers.keyboard);
+        this.containers.keyboard.addEventListener('keydown', this.buttonPressHandler.bind(this));
 
         // Creating title field
-        this.titleContainer = this.createElementForKeyboard('title_container', null);
-        this.titleContainer.innerHTML = (typeof this.titleText === 'string')
+        this.containers.title = this.createElementForKeyboard('title_container', null);
+        this.containers.title.innerHTML = (typeof this.titleText === 'string')
             ? this.titleText
             : 'Enter something interesting, please';
-        this.keyboardContainer.appendChild(this.titleContainer);
+        this.containers.keyboard.appendChild(this.containers.title);
 
         // Creating input field
-        this.inputContainer = document.createElement('input');
-        this.inputContainer.setAttribute('type', 'text');
-        this.inputContainer.className = 'virtual_keyboard_input_container';
-        this.inputContainer.addEventListener('blur', function() { this.focus(); });
-        this.inputContainer.value = (typeof this.inputText === 'string') ? this.inputText : '';
-        this.keyboardContainer.appendChild(this.inputContainer);
+        this.containers.input = document.createElement('input');
+        this.containers.input.setAttribute('type', 'text');
+        this.containers.input.className = 'virtual_keyboard_input_container';
+        this.containers.input.addEventListener('blur', function() { this.focus(); });
+        this.containers.input.value = (typeof this.inputText === 'string') ? this.inputText : '';
+        this.containers.keyboard.appendChild(this.containers.input);
         
         // Creating buttons container
-        this.buttonsContainer = this.createElementForKeyboard('buttons_container', null);
-        this.keyboardContainer.appendChild(this.buttonsContainer);
+        this.containers.buttons = this.createElementForKeyboard('buttons_container', null);
+        this.containers.keyboard.appendChild(this.containers.buttons);
 
     },
 
@@ -179,22 +181,13 @@ var VirtualKeyboard = {
      */
     destroy: function() {
 
-        // Removing input container
-        this.inputContainer.parentElement.removeChild(this.inputContainer);
-        this.inputContainer = null;
+        // Clearing all nested containers
+        for (var prop in this.containers) {
+            var container = this.containers[prop];
+            container.parentElement.removeChild(container);
+            container = null;
+        }
 
-        // Removing title container
-        this.titleContainer.parentElement.removeChild(this.titleContainer);
-        this.titleContainer = null;
-
-        // Removing buttons container
-        this.buttonsContainer.parentElement.removeChild(this.buttonsContainer);
-        this.buttonsContainer = null;
-
-        // Removing main keyboard container
-        this.keyboardContainer.parentElement.removeChild(this.keyboardContainer);
-        this.keyboardContainer = null; 
-        
     },
 
     /**
@@ -205,7 +198,7 @@ var VirtualKeyboard = {
     render: function(layout) {
 
         // Clearing previous template
-        this.buttonsContainer.innerHTML = '';
+        this.containers.buttons.innerHTML = '';
 
         // Forming new template
         for (var i = 0; i < layout.length; i += 1) { // Going through the rows
@@ -213,7 +206,7 @@ var VirtualKeyboard = {
             // Creating a row and appending it to the container
             var row = layout[i];
             var rowElement = this.createElementForKeyboard('row', null);
-            this.buttonsContainer.appendChild(rowElement);
+            this.containers.buttons.appendChild(rowElement);
 
             for (var j = 0; j < row.length; j += 1) { // Going through the columns (buttons)
 
@@ -306,7 +299,7 @@ var VirtualKeyboard = {
                 this.moveUpDown('down');
                 break;
             case this.navigationKeys.EXIT:
-                this.onCancel(this.inputContainer.value);
+                this.onCancel(this.containers.input.value);
                 this.destroy();
                 break;
         }
@@ -395,17 +388,17 @@ var VirtualKeyboard = {
         // Looking at button value
         switch(value) {
             case 'backspace':
-                this.removeCharacter(this.inputContainer);
+                this.removeCharacter(this.containers.input);
                 break;
             case 'clear':
-                this.inputContainer.value = '';
+                this.containers.input.value = '';
                 break;
             case 'enter':
-                this.onEnter(this.inputContainer.value);
+                this.onEnter(this.containers.input.value);
                 this.destroy();
                 break;
             case 'cancel':
-                this.onCancel(this.inputContainer.value);
+                this.onCancel(this.containers.input.value);
                 this.destroy();
                 break;
             case 'lang':
@@ -429,13 +422,13 @@ var VirtualKeyboard = {
                 }
                 break;
             case 'cursor_left':
-                this.moveCaret(this.inputContainer, -1);
+                this.moveCaret(this.containers.input, -1);
                 break;
             case 'cursor_right':
-                this.moveCaret(this.inputContainer, 1);
+                this.moveCaret(this.containers.input, 1);
                 break;
             default:
-                this.insertCharacter(this.inputContainer, value);
+                this.insertCharacter(this.containers.input, value);
         }
 
     },
@@ -457,7 +450,7 @@ var VirtualKeyboard = {
         this.activeButton.x = x;
         this.activeButton.y = y;
         this.activeButton.value = this.layout.active[y][x].value;
-        this.activeButton.element = this.buttonsContainer.querySelector('.x_' + x + '_y_' + y);
+        this.activeButton.element = this.containers.buttons.querySelector('.x_' + x + '_y_' + y);
 
         // Adding a focus to the new active button
         this.addRemoveFocus(this.activeButton.element, 'add');
