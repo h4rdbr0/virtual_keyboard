@@ -1,17 +1,16 @@
 # JavaScript Virtual Keyboard
 
-### Intro
 The idea of this small library came from the lack of the ability to call the on-screen keyboard on some Smart TVs or STB. For example, when you want to make a search or something in your application.
 
-------------
-### Structure
+## Structure
+
 The library is written on pure JavaScript, so it does not require any side libraries (like jQuery). The library is not using any ES6+ features, because some Smart TVs or STB have old browsers, which do not support modern standarts.
 The library consists of the main script file `virtual_keyboard.js` and the stylesheet file `virtual_keyboard.css` (see `/src` folder).
 In addition there must be at least one keyboard layout file. Currently there are 2 layouts available - English and Russian (`virtual_keyboard_layout_eng.js` and `virtual_keyboard_layout_rus.js`). If necessary, you can add your own layout based on these.
 The keyboard is controlled by buttons (physical keyboard or remote controller). Also there is a mouse support for control.
 
-------------
-### Basic usage
+## Basic usage
+
 First of all, include a main script, stylesheet and layout files to your application:
 
     <link rel="stylesheet" href="src/virtual_keyboard.css">
@@ -48,8 +47,8 @@ Then initialize the keyboard in your application. In the library the main object
 
 You can also try to run the example from a file `sample/index.html`.
 
-------------
-### Configuration
+## Configuration
+
 Full configuration is showing below (`init()` method parameters):
 
     newKeyboard.init({
@@ -90,6 +89,6 @@ Full configuration is showing below (`init()` method parameters):
 
 Only the `templates` parameter is mandatory.
 
-------------
-### License
+## License
+
 See `LICENSE.txt` file.
